@@ -19,22 +19,39 @@
         <sprite>sprites\spr_plr_attack_side</sprite>
         <sprite>sprites\spr_plr_attack_down</sprite>
       </sprites>
+      <sprite>sprites\spr_plr_shadow</sprite>
     </sprites>
     <sprites name="Cursor">
       <sprite>sprites\spr_cursor</sprite>
     </sprites>
+    <sprites name="Slime">
+      <sprite>sprites\spr_normal</sprite>
+    </sprites>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\bkg_grass</background>
+  </backgrounds>
   <paths name="paths"/>
+  <fonts name="fonts">
+    <font>fonts\f_text</font>
+  </fonts>
   <objects name="objects">
+    <object>objects\obj_hitmark</object>
     <object>objects\obj_plr</object>
     <object>objects\obj_cursor</object>
+    <object>objects\obj_slime_spawner</object>
+    <objects name="Slime">
+      <object>objects\obj_slime_medium</object>
+      <object>objects\obj_slime_big</object>
+      <object>objects\obj_slime_normal</object>
+      <object>objects\obj_slime_base</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\r_game</room>
   </rooms>
   <constants number="1">
-    <constant name="adelta_time">delta_time/100000</constant>
+    <constant name="adelta_time">delta_time/1000000</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

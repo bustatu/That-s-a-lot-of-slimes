@@ -54,8 +54,8 @@ gamepad_set_axis_deadzone(0, 0.1);
 facing = 0
 
 //Proprieties
-move_speed = 10;
-anim_speed = 1;
+move_speed = 100;
+anim_speed = 12.5;
 
 </string>
           </argument>
@@ -80,6 +80,9 @@ anim_speed = 1;
           <argument>
             <kind>1</kind>
             <string>///Step
+
+//Set depth
+depth = -y - sprite_height / 2
 
 //Check how much did he move on each axis
 if(gamepad_is_connected(0))
@@ -235,9 +238,46 @@ else
     }
 }
 
+//If attacking and hits specific frame
+if(axis_attack &amp;&amp; image_index == 5)
+{
+    ///Create hit marker
+    var inst = instance_create(x, y, obj_hitmark);
+    inst.facing = facing
+}
+
 //Set player in the centre of the view
 view_xview[0] = x - view_wview[0] / 2
 view_yview[0] = y - view_hview[0] / 2
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw
+
+//Draw shadow
+draw_sprite_ext(spr_plr_shadow, 0, x, y + 22 * image_yscale, image_xscale, image_yscale, 0, c_white, 1)
+
+//Draw self
+draw_self()
 </string>
           </argument>
         </arguments>
