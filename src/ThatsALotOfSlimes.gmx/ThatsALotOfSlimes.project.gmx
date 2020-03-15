@@ -27,6 +27,7 @@
     <sprites name="Slime">
       <sprite>sprites\spr_normal</sprite>
     </sprites>
+    <sprite>sprites\spr_hitmark</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bkg_grass</background>
@@ -46,8 +47,10 @@
       <object>objects\obj_slime_normal</object>
       <object>objects\obj_slime_base</object>
     </objects>
+    <object>objects\obj_settings</object>
   </objects>
   <rooms name="rooms">
+    <room>rooms\r_menu</room>
     <room>rooms\r_game</room>
   </rooms>
   <constants number="1">

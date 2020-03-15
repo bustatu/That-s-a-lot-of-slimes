@@ -32,7 +32,7 @@ cursor_sprite = cr_none
 window_set_cursor(cr_none)
 
 //Move speed for gamepad
-move_speed = 40
+move_speed = 400
 
 //IF other than desktop, then destroy
 if(os_type == os_android)

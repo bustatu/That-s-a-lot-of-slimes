@@ -32,7 +32,7 @@ anim_speed = 3
 image_xscale = 4
 image_yscale = 4
 state = "idle"
-move_speed = 15
+move_speed = 20
 </string>
           </argument>
         </arguments>

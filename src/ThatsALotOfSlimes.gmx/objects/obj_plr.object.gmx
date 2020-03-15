@@ -53,8 +53,11 @@ gamepad_set_axis_deadzone(0, 0.1);
 //Facing
 facing = 0
 
+//Redness
+redness = 0
+
 //Proprieties
-move_speed = 100;
+move_speed = 70;
 anim_speed = 12.5;
 
 </string>
@@ -83,6 +86,13 @@ anim_speed = 12.5;
 
 //Set depth
 depth = -y - sprite_height / 2
+
+if(redness &gt; 0){
+    redness -= adelta_time
+}
+else {
+    redness = 0
+}
 
 //Check how much did he move on each axis
 if(gamepad_is_connected(0))
@@ -239,11 +249,10 @@ else
 }
 
 //If attacking and hits specific frame
-if(axis_attack &amp;&amp; image_index == 5)
+if(axis_attack &amp;&amp; floor(image_index) == 5)
 {
     ///Create hit marker
     var inst = instance_create(x, y, obj_hitmark);
-    inst.facing = facing
 }
 
 //Set player in the centre of the view
@@ -277,6 +286,7 @@ view_yview[0] = y - view_hview[0] / 2
 draw_sprite_ext(spr_plr_shadow, 0, x, y + 22 * image_yscale, image_xscale, image_yscale, 0, c_white, 1)
 
 //Draw self
+image_blend = make_color_rgb(255,255 * (1-redness),255 * (1-redness))
 draw_self()
 </string>
           </argument>

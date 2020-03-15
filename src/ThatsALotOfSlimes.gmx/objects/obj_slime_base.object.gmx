@@ -57,12 +57,19 @@ if(point_distance(obj_plr.x, obj_plr.y, x, y) &lt;= 10 * image_xscale)
 {
     x += lengthdir_x(1, point_direction(obj_plr.x, obj_plr.y, x, y)) * 140 * 1 / image_xscale
     y += lengthdir_y(1, point_direction(obj_plr.x, obj_plr.y, x, y)) * 140 * 1 / image_yscale
+    obj_slime_spawner.damage_count++
+    obj_plr.redness = 1
 }
-else 
+else if(point_distance(obj_plr.x, obj_plr.y, x, y) &lt;= 1000)
 {
     state = "moving"
     move_towards_point(obj_plr.x, obj_plr.y, move_speed * adelta_time)
 }
+else
+{
+    instance_destroy()
+}
+
 
 </string>
           </argument>
