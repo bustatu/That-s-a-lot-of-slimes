@@ -40,12 +40,12 @@
     <object>objects\obj_hitmark</object>
     <object>objects\obj_plr</object>
     <object>objects\obj_cursor</object>
-    <object>objects\obj_slime_spawner</object>
     <objects name="Slime">
       <object>objects\obj_slime_medium</object>
       <object>objects\obj_slime_big</object>
       <object>objects\obj_slime_normal</object>
       <object>objects\obj_slime_base</object>
+      <object>objects\obj_slime_spawner</object>
     </objects>
     <object>objects\obj_settings</object>
   </objects>

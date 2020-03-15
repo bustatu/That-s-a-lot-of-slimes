@@ -59,55 +59,64 @@ damage_count = 0
             <kind>1</kind>
             <string>///Step
 
-//Coordonates are the same as player's
-x = obj_plr.x
-y = obj_plr.y
-
-//Spawn a slime
-if(floor(timer) % rate == 0)
+//If not paused
+if(!obj_plr.paused)
 {
-    while(count--)
+    //Coordonates are the same as player's
+    x = obj_plr.x
+    y = obj_plr.y
+    
+    //Update timer
+    timer += adelta_time
+    
+    //Spawn a slime
+    if(floor(timer) % rate == 0)
     {
-        randomize()
-        var px = x + view_wview[0] / 2 - random(view_wview[0])
-        var py = y + view_hview[0] / 2 - random(view_hview[0])
-        while(point_distance(px, py, obj_plr.x, obj_plr.y) &lt;= 100)
+        while(count--)
         {
             randomize()
-            px = x + view_wview[0] / 2 - random(view_wview[0])
-            py = y + view_hview[0] / 2 - random(view_hview[0])            
+            var px = x + view_wview[0] / 2 - random(view_wview[0])
+            var py = y + view_hview[0] / 2 - random(view_hview[0])
+            while(point_distance(px, py, obj_plr.x, obj_plr.y) &lt;= 100)
+            {
+                randomize()
+                px = x + view_wview[0] / 2 - random(view_wview[0])
+                py = y + view_hview[0] / 2 - random(view_hview[0])            
+            }
+            randomize()
+            switch(choose(0,0,0,0,1,1,2))
+            {
+                case 0:
+                {
+                    instance_create(px, py, obj_slime_normal)
+                    break;
+                }
+                case 1:
+                {
+                    instance_create(px, py, obj_slime_medium)
+                    break;
+                }
+                case 2:
+                {
+                    instance_create(px, py, obj_slime_big)
+                    break;
+                }
+            }    
         }
-        randomize()
-        switch(choose(0,0,0,0,1,1,2))
+        if(!updated)
         {
-            case 0:
-            {
-                instance_create(px, py, obj_slime_normal)
-                break;
-            }
-            case 1:
-            {
-                instance_create(px, py, obj_slime_medium)
-                break;
-            }
-            case 2:
-            {
-                instance_create(px, py, obj_slime_big)
-                break;
-            }
-        }    
+            counti++
+            updated = true
+        }
     }
-    if(!updated)
+    else 
     {
-        counti++
-        updated = true
+        count = counti
+        updated = false
     }
 }
-else 
-{
-    count = counti
-    updated = false
-}
+
+
 </string>
           </argument>
         </arguments>
@@ -130,10 +139,7 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Draw
-
-//Update and draw timer
-timer += adelta_time
+            <string>///Draw GUI
 
 draw_set_font(f_text)
 draw_set_color(c_black)

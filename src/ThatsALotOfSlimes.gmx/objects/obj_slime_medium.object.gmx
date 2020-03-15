@@ -60,9 +60,6 @@ move_speed = 20
 //Set depth
 depth = -y - sprite_height / 2
 
-//Parent event
-event_inherited()
-
 //Idle state
 if(state == "idle")
 {
@@ -79,7 +76,8 @@ else if(state == "moving")
     image_speed = adelta_time * anim_speed
 }
 
-//IF distance to player is small enough, go torwards him
+//Parent event
+event_inherited()
 </string>
           </argument>
         </arguments>

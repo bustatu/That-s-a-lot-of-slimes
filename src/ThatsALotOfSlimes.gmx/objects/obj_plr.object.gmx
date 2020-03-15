@@ -33,9 +33,11 @@ key_down = vk_down
 key_left = vk_left
 key_right = vk_right
 key_attack = vk_space
+key_escape = vk_escape
 
 //Gamepad keys
 gp_attack = gp_face1
+gp_escape = gp_select
 
 //Alternatives
 ord_up = ord('W')
@@ -43,9 +45,13 @@ ord_down = ord('S')
 ord_left = ord('A')
 ord_right = ord('D')
 ord_attack = vk_space
+ord_escape = vk_escape
 
 //Get image scale
 img_xscale = image_xscale
+
+//Game paused
+paused = false
 
 //Gamepad deadzone
 gamepad_set_axis_deadzone(0, 0.1);
@@ -87,177 +93,196 @@ anim_speed = 12.5;
 //Set depth
 depth = -y - sprite_height / 2
 
-if(redness &gt; 0){
-    redness -= adelta_time
-}
-else {
-    redness = 0
-}
-
-//Check how much did he move on each axis
+//Pause button
 if(gamepad_is_connected(0))
 {
-    axis_x = gamepad_axis_value(0, gp_axislh)
-    axis_y = gamepad_axis_value(0, gp_axislv)
-    axis_attack = gamepad_button_check(0, gp_attack)
+    axis_paused = gamepad_button_check_pressed(0, gp_escape)
 }
-else 
-{
-    axis_x = (keyboard_check(ord_right) || keyboard_check(key_right)) - (keyboard_check(ord_left) || keyboard_check(key_left))
-    axis_y = (keyboard_check(ord_down) || keyboard_check(key_down)) - (keyboard_check(ord_up) || keyboard_check(key_up))
-    axis_attack = (keyboard_check(key_attack) || keyboard_check(ord_attack))
+else {
+    axis_paused = keyboard_check_pressed(key_escape) || keyboard_check_pressed(ord_escape)
 }
 
-
-//IF moved
-if(axis_x != 0 || axis_y != 0)
+if(axis_paused)
 {
-    //New coordonates
-    nx = x + lengthdir_x(1, point_direction(0, 0, axis_x, axis_y)) * move_speed * adelta_time
-    ny = y + lengthdir_y(1, point_direction(0, 0, axis_x, axis_y)) * move_speed * adelta_time
-    
-    
-    //If not attacking and place is free
-    if(!axis_attack)
-    {
-        //If gamepad
-        if(gamepad_is_connected(0))
-        {
-            //Update cursor coordonates
-            obj_cursor.x += nx - x
-            obj_cursor.y += ny - y
-        }
-        
-        //Update coordonates
-        x = nx
-        y = ny
-    }
-
-    
-    //Update animation
-    if(axis_x &gt; 0)
-    {
-        //If not attacking
-        if(!axis_attack)
-        {
-            sprite_index = spr_plr_walk_side
-        }
-        else 
-        {
-            sprite_index = spr_plr_attack_side
-        }
-        image_xscale = -img_xscale
-        facing = 3
-    }
-    else if(axis_x &lt; 0)
-    {
-        //If not attacking
-        if(!axis_attack)
-        {
-            sprite_index = spr_plr_walk_side
-        }
-        else 
-        {
-            sprite_index = spr_plr_attack_side
-        }
-        image_xscale = img_xscale
-        facing = 2
-    }
-    else if(axis_y &lt; 0)
-    {
-        //If not attacking
-        if(!axis_attack)
-        {
-            sprite_index = spr_plr_walk_up
-        }
-        else 
-        {
-            sprite_index = spr_plr_attack_up
-        }
-        facing = 0
-    }
-    else if(axis_y &gt; 0)
-    {
-        //If not attacking
-        if(!axis_attack)
-        {
-            sprite_index = spr_plr_walk_down
-        }
-        else 
-        {
-            sprite_index = spr_plr_attack_down
-        }
-        facing = 1
-    }
-    
-    //Update animation speed
-    image_speed = anim_speed * adelta_time;
+    paused = !paused
 }
-//Idle
-else 
+
+//Paused
+if(!paused)
 {
-    //If not attacking
-    if(!axis_attack)
+    //Redness from hit
+    if(redness &gt; 0){
+        redness -= adelta_time
+    }
+    else {
+        redness = 0
+    }
+    
+    //Check how much did he move on each axis
+    if(gamepad_is_connected(0))
     {
-        //Set facing and image index if not attacking
-        image_speed = 0
-        image_index = facing
-        if(facing == 3)
-        {
-            image_xscale = -img_xscale
-            image_index = 2
-        }
-        else if(facing == 2)
-        {
-            image_xscale = img_xscale
-            image_index = 2
-        }
-        //Idle
-        sprite_index = spr_plr_idle
+        axis_x = gamepad_axis_value(0, gp_axislh)
+        axis_y = gamepad_axis_value(0, gp_axislv)
+        axis_attack = gamepad_button_check(0, gp_attack)
     }
     else 
     {
-        switch(facing)
+        axis_x = (keyboard_check(ord_right) || keyboard_check(key_right)) - (keyboard_check(ord_left) || keyboard_check(key_left))
+        axis_y = (keyboard_check(ord_down) || keyboard_check(key_down)) - (keyboard_check(ord_up) || keyboard_check(key_up))
+        axis_attack = (keyboard_check(key_attack) || keyboard_check(ord_attack))
+    }
+    
+    
+    //IF moved
+    if(axis_x != 0 || axis_y != 0)
+    {
+        //New coordonates
+        nx = x + lengthdir_x(1, point_direction(0, 0, axis_x, axis_y)) * move_speed * adelta_time
+        ny = y + lengthdir_y(1, point_direction(0, 0, axis_x, axis_y)) * move_speed * adelta_time
+        
+        
+        //If not attacking and place is free
+        if(!axis_attack)
         {
-            case 0:
+            //If gamepad
+            if(gamepad_is_connected(0))
+            {
+                //Update cursor coordonates
+                obj_cursor.x += nx - x
+                obj_cursor.y += ny - y
+            }
+            
+            //Update coordonates
+            x = nx
+            y = ny
+        }
+    
+        
+        //Update animation
+        if(axis_x &gt; 0)
+        {
+            //If not attacking
+            if(!axis_attack)
+            {
+                sprite_index = spr_plr_walk_side
+            }
+            else 
+            {
+                sprite_index = spr_plr_attack_side
+            }
+            image_xscale = -img_xscale
+            facing = 3
+        }
+        else if(axis_x &lt; 0)
+        {
+            //If not attacking
+            if(!axis_attack)
+            {
+                sprite_index = spr_plr_walk_side
+            }
+            else 
+            {
+                sprite_index = spr_plr_attack_side
+            }
+            image_xscale = img_xscale
+            facing = 2
+        }
+        else if(axis_y &lt; 0)
+        {
+            //If not attacking
+            if(!axis_attack)
+            {
+                sprite_index = spr_plr_walk_up
+            }
+            else 
             {
                 sprite_index = spr_plr_attack_up
-                break
             }
-            case 1:
+            facing = 0
+        }
+        else if(axis_y &gt; 0)
+        {
+            //If not attacking
+            if(!axis_attack)
+            {
+                sprite_index = spr_plr_walk_down
+            }
+            else 
             {
                 sprite_index = spr_plr_attack_down
-                break
             }
-            case 2:
-            {
-                image_xscale = img_xscale
-                sprite_index = spr_plr_attack_side
-                break
-            }
-            case 3:
-            {
-                image_xscale = -img_xscale
-                sprite_index = spr_plr_attack_side
-                break
-            }
+            facing = 1
         }
         
         //Update animation speed
         image_speed = anim_speed * adelta_time;
     }
+    //Idle
+    else 
+    {
+        //If not attacking
+        if(!axis_attack)
+        {
+            //Set facing and image index if not attacking
+            image_speed = 0
+            image_index = facing
+            if(facing == 3)
+            {
+                image_xscale = -img_xscale
+                image_index = 2
+            }
+            else if(facing == 2)
+            {
+                image_xscale = img_xscale
+                image_index = 2
+            }
+            //Idle
+            sprite_index = spr_plr_idle
+        }
+        else 
+        {
+            switch(facing)
+            {
+                case 0:
+                {
+                    sprite_index = spr_plr_attack_up
+                    break
+                }
+                case 1:
+                {
+                    sprite_index = spr_plr_attack_down
+                    break
+                }
+                case 2:
+                {
+                    image_xscale = img_xscale
+                    sprite_index = spr_plr_attack_side
+                    break
+                }
+                case 3:
+                {
+                    image_xscale = -img_xscale
+                    sprite_index = spr_plr_attack_side
+                    break
+                }
+            }
+            
+            //Update animation speed
+            image_speed = anim_speed * adelta_time;
+        }
+    }
+    
+    //If attacking and hits specific frame
+    if(axis_attack &amp;&amp; floor(image_index) == 5)
+    {
+        ///Create hit marker
+        var inst = instance_create(x, y, obj_hitmark);
+    }
+    
+    //Set player in the centre of the view
+    view_xview[0] = x - view_wview[0] / 2
+    view_yview[0] = y - view_hview[0] / 2
 }
-
-//If attacking and hits specific frame
-if(axis_attack &amp;&amp; floor(image_index) == 5)
-{
-    ///Create hit marker
-    var inst = instance_create(x, y, obj_hitmark);
-}
-
-//Set player in the centre of the view
-view_xview[0] = x - view_wview[0] / 2
-view_yview[0] = y - view_hview[0] / 2
 </string>
           </argument>
         </arguments>
