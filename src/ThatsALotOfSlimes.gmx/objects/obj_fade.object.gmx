@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -27,14 +27,18 @@
             <kind>1</kind>
             <string>///Create
 
-//Timer
-timer = 0
-rate = 5
-counti = 3
-updated = true
-count = counti
-counter = 0
-damage_count = 0
+///Proprieties
+a=0
+a_speed=0.1
+dir=1
+room_to_go=-1
+fade_color=make_color_rgb(0,0,0)
+
+///We are in fade
+global.in_fade=true
+
+
+
 </string>
           </argument>
         </arguments>
@@ -59,75 +63,29 @@ damage_count = 0
             <kind>1</kind>
             <string>///Step
 
-//If not paused
-if(!obj_plr.paused)
-{
-    //Coordonates are the same as player's
-    x = obj_plr.x
-    y = obj_plr.y
-    
-    //Update timer
-    timer += adelta_time
-    
-    //Spawn a slime
-    if(floor(timer) % rate == 0)
-    {
-        while(count--)
-        {
-            randomize()
-            var px = x + view_wview[0] / 2 - random(view_wview[0])
-            var py = y + view_hview[0] / 2 - random(view_hview[0])
-            while(point_distance(px, py, obj_plr.x, obj_plr.y) &lt;= 100)
-            {
-                randomize()
-                px = x + view_wview[0] / 2 - random(view_wview[0])
-                py = y + view_hview[0] / 2 - random(view_hview[0])            
-            }
-            randomize()
-            switch(choose(0,0,0,0,1,1,2))
-            {
-                case 0:
-                {
-                    instance_create(px, py, obj_slime_normal)
-                    break;
-                }
-                case 1:
-                {
-                    instance_create(px, py, obj_slime_medium)
-                    break;
-                }
-                case 2:
-                {
-                    instance_create(px, py, obj_slime_big)
-                    break;
-                }
-            }    
-        }
-        if(!updated)
-        {
-            counti++
-            updated = true
-        }
-    }
-    else 
-    {
-        count = counti
-        updated = false
+///Update a
+a+=adelta_time*a_speed*dir
+
+///If fade in complete
+if(a&gt;1){
+    a=1
+    dir=-dir
+    if(room_to_go!=-1){
+        room_goto(room_to_go)
     }
 }
 
-if(instance_number(obj_slime_base) == 0)
-{
+///If fade out complete
+if(a&lt;0){
     instance_destroy()
+    global.in_fade=false
 }
-
-
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="64">
+    <event eventtype="8" enumb="75">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -144,36 +102,13 @@ if(instance_number(obj_slime_base) == 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Draw GUI
+            <string>///Draw
 
-draw_set_font(f_text)
-draw_set_color(c_black)
-draw_rectangle(5, 5, string_width("Time passed: " + string(timer) + " s") + 10, 45, false)
-
-draw_set_color(c_gray)
-draw_rectangle(5, 5, string_width("Time passed: " + string(timer) + " s") + 10, 45, true)
-
-draw_set_color(c_white)
-draw_text(10, 10, "Time passed: " + string(timer) + " s")
-
-draw_set_color(c_black)
-draw_rectangle(605, 5, 610 + string_width("Slimes killed: " + string(counter)), 45, false)
-
-draw_set_color(c_gray)
-draw_rectangle(605, 5, 610 + string_width("Slimes killed: " + string(counter)), 45, true)
-
-draw_set_color(c_white)
-draw_text(610, 10, "Slimes killed: " + string(counter))
-
-draw_set_color(c_black)
-draw_rectangle(605, 55, 610 + string_width("Damage taken: " + string(damage_count)), 95, false)
-
-draw_set_color(c_gray)
-draw_rectangle(605, 55, 610 + string_width("Damage taken: " + string(damage_count)), 95, true)
-
-draw_set_color(c_white)
-draw_text(610, 60, "Damage taken: " + string(damage_count))
-
+///Draw rectangle for fade
+draw_set_alpha(a)
+draw_set_color(fade_color)
+draw_rectangle(0,0,room_width,room_height,false)
+draw_set_alpha(1)
 </string>
           </argument>
         </arguments>

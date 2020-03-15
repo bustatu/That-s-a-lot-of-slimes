@@ -3,15 +3,15 @@
   <caption></caption>
   <width>960</width>
   <height>540</height>
-  <vsnap>32</vsnap>
-  <hsnap>32</hsnap>
+  <vsnap>1</vsnap>
+  <hsnap>1</hsnap>
   <isometric>0</isometric>
-  <speed>30</speed>
+  <speed>9999</speed>
   <persistent>0</persistent>
   <colour>12632256</colour>
-  <showcolour>-1</showcolour>
+  <showcolour>0</showcolour>
   <code></code>
-  <enableViews>0</enableViews>
+  <enableViews>-1</enableViews>
   <clearViewBackground>-1</clearViewBackground>
   <clearDisplayBuffer>-1</clearDisplayBuffer>
   <makerSettings>
@@ -31,7 +31,7 @@
     <yoffset>0</yoffset>
   </makerSettings>
   <backgrounds>
-    <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
+    <background visible="-1" foreground="0" name="bk_menu_grass" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
@@ -41,7 +41,7 @@
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
   </backgrounds>
   <views>
-    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
+    <view visible="-1" objName="&lt;undefined&gt;" xview="0" yview="0" wview="960" hview="540" xport="0" yport="0" wport="960" hport="540" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
@@ -52,6 +52,13 @@
   </views>
   <instances>
     <instance objName="obj_settings" x="0" y="0" name="inst_F29AACB3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_button" x="381" y="440" name="inst_18DBF0D1" locked="0" code="text = &quot;EXIT GAME&quot;&#xA;b_size_x = 200&#xA;b_size_y = 50&#xA;execution_id = 1&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_txt" x="5" y="520" name="inst_522DC1D3" locked="0" code="text = &quot;made by Boostatu for the COVID-19 Quarantine Jam. Stay safe!&quot;&#xA;text_font = f_text_smaller" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_txt" x="170" y="100" name="inst_3BDCAF6D" locked="0" code="text = &quot;That's a lot of slimes!&quot;&#xA;text_font = f_text_bigger&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_button" x="380" y="200" name="inst_2F652EBE" locked="0" code="text = &quot;PLAY GAME&quot;&#xA;b_size_x = 200&#xA;b_size_y = 50&#xA;execution_id = 2" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_button" x="355" y="360" name="inst_F8757DF6" locked="0" code="text = &quot;ACHIEVEMENTS&quot;&#xA;b_size_x = 250&#xA;b_size_y = 50&#xA;execution_id = 4&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_button" x="380" y="280" name="inst_1D44583C" locked="0" code="text = &quot;OPTIONS&quot;&#xA;b_size_x = 200&#xA;b_size_y = 50&#xA;execution_id = 3&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_txt" x="10" y="10" name="inst_4A0EFD7D" locked="0" code="text = &quot;build &quot; + date_datetime_string(GM_build_date)&#xA;text_font = f_text_smaller&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

@@ -28,33 +28,33 @@
             <string>///Create
 
 //Arrow keys
-key_up = vk_up
-key_down = vk_down
-key_left = vk_left
-key_right = vk_right
-key_attack = vk_space
-key_escape = vk_escape
+key_up = obj_settings.key_up
+key_down = obj_settings.key_down
+key_left = obj_settings.key_left
+key_right = obj_settings.key_right
+key_attack = obj_settings.key_attack
+key_escape = obj_settings.key_escape
 
 //Gamepad keys
-gp_attack = gp_face1
-gp_escape = gp_select
+gp_attack = obj_settings.gp_attack
+gp_escape = obj_settings.gp_escape
+
+//Mouse keys
+mouse_attack = obj_settings.mouse_attack
 
 //Alternatives
-ord_up = ord('W')
-ord_down = ord('S')
-ord_left = ord('A')
-ord_right = ord('D')
-ord_attack = vk_space
-ord_escape = vk_escape
+ord_up = obj_settings.ord_up
+ord_down = obj_settings.ord_down
+ord_left = obj_settings.ord_left
+ord_right = obj_settings.ord_right
+ord_attack = obj_settings.ord_attack
+ord_escape = obj_settings.ord_escape
 
 //Get image scale
 img_xscale = image_xscale
 
 //Game paused
 paused = false
-
-//Gamepad deadzone
-gamepad_set_axis_deadzone(0, 0.1);
 
 //Facing
 facing = 0
@@ -102,6 +102,20 @@ else {
     axis_paused = keyboard_check_pressed(key_escape) || keyboard_check_pressed(ord_escape)
 }
 
+//Check how much did he move on each axis
+if(gamepad_is_connected(0))
+{
+    axis_x = gamepad_axis_value(0, gp_axislh)
+    axis_y = gamepad_axis_value(0, gp_axislv)
+    axis_attack = gamepad_button_check(0, gp_attack)
+}
+else 
+{
+    axis_x = (keyboard_check(ord_right) || keyboard_check(key_right)) - (keyboard_check(ord_left) || keyboard_check(key_left))
+    axis_y = (keyboard_check(ord_down) || keyboard_check(key_down)) - (keyboard_check(ord_up) || keyboard_check(key_up))
+    axis_attack = (keyboard_check(key_attack) || keyboard_check(ord_attack)) || mouse_check_button(mouse_attack)
+}
+
 if(axis_paused)
 {
     paused = !paused
@@ -116,22 +130,7 @@ if(!paused)
     }
     else {
         redness = 0
-    }
-    
-    //Check how much did he move on each axis
-    if(gamepad_is_connected(0))
-    {
-        axis_x = gamepad_axis_value(0, gp_axislh)
-        axis_y = gamepad_axis_value(0, gp_axislv)
-        axis_attack = gamepad_button_check(0, gp_attack)
-    }
-    else 
-    {
-        axis_x = (keyboard_check(ord_right) || keyboard_check(key_right)) - (keyboard_check(ord_left) || keyboard_check(key_left))
-        axis_y = (keyboard_check(ord_down) || keyboard_check(key_down)) - (keyboard_check(ord_up) || keyboard_check(key_up))
-        axis_attack = (keyboard_check(key_attack) || keyboard_check(ord_attack))
-    }
-    
+    }  
     
     //IF moved
     if(axis_x != 0 || axis_y != 0)
@@ -282,6 +281,101 @@ if(!paused)
     //Set player in the centre of the view
     view_xview[0] = x - view_wview[0] / 2
     view_yview[0] = y - view_hview[0] / 2
+}
+else {
+    image_speed = 0
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw GUI
+
+//Pause menu
+if(paused)
+{
+    draw_set_color(c_black)
+    draw_rectangle(350, 150, 600, 325, false)
+    
+    draw_set_color(c_gray)
+    draw_rectangle(350, 150, 600, 325, true)
+    
+    draw_set_color(c_white)
+    draw_text(370, 170, "GAME PAUSED")
+    
+    //Resume button
+    if(obj_cursor.actual_x&gt;=380&amp;&amp;obj_cursor.actual_x&lt;=570&amp;&amp;obj_cursor.actual_y&gt;=210&amp;&amp;obj_cursor.actual_y&lt;=240)
+    {
+        draw_set_color(make_color_rgb(50,50,50))
+        if(gamepad_is_connected(0))
+        {
+            paused = !axis_attack
+        }
+        else 
+        {
+            paused = !mouse_check_button(mouse_attack)
+        }
+    }
+    else 
+    {
+        draw_set_color(c_black)
+    }
+    draw_rectangle(380, 210, 570, 240, false)
+    
+    draw_set_color(c_white)
+    draw_rectangle(380, 210, 570, 240, true)
+    draw_text(420, 207, "RESUME")
+    
+    //Menu button
+    if(obj_cursor.actual_x&gt;=380&amp;&amp;obj_cursor.actual_x&lt;=570&amp;&amp;obj_cursor.actual_y&gt;=270&amp;&amp;obj_cursor.actual_y&lt;=300)
+    {
+        draw_set_color(make_color_rgb(50,50,50))
+        if(gamepad_is_connected(0))
+        {
+            if(gamepad_button_check_pressed(0, gp_attack))
+            {
+                var inst = instance_create(0,0,obj_fade);
+                inst.room_to_go = r_menu
+                inst.a_speed = 1 / 2
+            }
+        }
+        else 
+        {
+            if(mouse_check_button_pressed(mouse_attack))
+            {
+                var inst = instance_create(0,0,obj_fade);
+                inst.room_to_go = r_menu
+                inst.a_speed = 1 / 2
+            }
+        }
+    }
+    else 
+    {
+        draw_set_color(c_black)
+    }
+    draw_rectangle(380, 270, 570, 300, false)
+    
+    draw_set_color(c_white)
+    draw_rectangle(380, 270, 570, 300, true)
+    draw_text(380, 267, "GO TO MENU")
 }
 </string>
           </argument>

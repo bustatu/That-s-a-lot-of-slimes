@@ -34,6 +34,10 @@ window_set_cursor(cr_none)
 //Move speed for gamepad
 move_speed = 400
 
+//Actual x
+actual_x = 0
+actual_y = 0
+
 //IF other than desktop, then destroy
 if(os_type == os_android)
 {
@@ -73,19 +77,43 @@ image_index = 0
 if(gamepad_is_connected(0))
 {
     //Move using the right stick
-    x += gamepad_axis_value(0, gp_axisrh) * move_speed * adelta_time
-    y += gamepad_axis_value(0, gp_axisrv) * move_speed * adelta_time
+    nx = x + gamepad_axis_value(0, gp_axisrh) * move_speed * adelta_time
+    ny = y + gamepad_axis_value(0, gp_axisrv) * move_speed * adelta_time
+    if(actual_x&gt;=0&amp;&amp;actual_x&lt;=view_wview[0])
+    {
+        x = nx
+    }
+    else 
+    {
+        if(actual_x&lt;0)
+        {
+            x = view_xview[0] + view_wview[0]
+        }
+        else
+        {
+            x = view_xview[0]
+        }
+    }
+    if(actual_y&gt;=0&amp;&amp;actual_y&lt;=view_hview[0])
+    {
+        y = ny
+    }
+    else 
+    {
+        if(actual_y&lt;0)
+        {
+            y = view_yview[0] + view_hview[0]
+        }
+        else
+        {
+            y = view_yview[0]
+        }
+    }
 }
 else {
     //Position
     x = mouse_x
     y = mouse_y
-}
-
-//If cursor is over the player
-if(collision_point(x, y, obj_plr, true, false))
-{
-    image_index = 1
 }
 
 ///Fullscreen toggle
@@ -118,7 +146,9 @@ if(keyboard_check_pressed(vk_f11))
             <kind>1</kind>
             <string>///Draw GUI
 
-draw_sprite_ext(sprite_index, image_index, x - view_xview[0], y - view_yview[0], image_xscale, image_yscale, 0, c_white, 1)
+actual_x = x - view_xview[0]
+actual_y = y - view_yview[0]
+draw_sprite_ext(sprite_index, image_index, actual_x, actual_y, image_xscale, image_yscale, 0, c_white, 1)
 </string>
           </argument>
         </arguments>

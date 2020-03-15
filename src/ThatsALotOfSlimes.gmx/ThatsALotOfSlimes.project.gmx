@@ -31,15 +31,18 @@
   </sprites>
   <backgrounds name="background">
     <background>background\bkg_grass</background>
+    <background>background\bk_menu_grass</background>
   </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\b_execute_event.gml</script>
+  </scripts>
   <fonts name="fonts">
     <font>fonts\f_text</font>
+    <font>fonts\f_text_smaller</font>
+    <font>fonts\f_text_bigger</font>
   </fonts>
   <objects name="objects">
-    <object>objects\obj_hitmark</object>
-    <object>objects\obj_plr</object>
-    <object>objects\obj_cursor</object>
     <objects name="Slime">
       <object>objects\obj_slime_medium</object>
       <object>objects\obj_slime_big</object>
@@ -47,11 +50,24 @@
       <object>objects\obj_slime_base</object>
       <object>objects\obj_slime_spawner</object>
     </objects>
-    <object>objects\obj_settings</object>
+    <objects name="GUI">
+      <object>objects\obj_button</object>
+      <object>objects\obj_txt</object>
+      <object>objects\obj_fade</object>
+    </objects>
+    <objects name="Player">
+      <object>objects\obj_hitmark</object>
+      <object>objects\obj_plr</object>
+    </objects>
+    <objects name="System">
+      <object>objects\obj_cursor</object>
+      <object>objects\obj_settings</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\r_menu</room>
     <room>rooms\r_game</room>
+    <room>rooms\r_options</room>
   </rooms>
   <constants number="1">
     <constant name="adelta_time">delta_time/1000000</constant>
