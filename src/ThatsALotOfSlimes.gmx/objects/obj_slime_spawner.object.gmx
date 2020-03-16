@@ -116,10 +116,10 @@ if(!obj_plr.paused)
     }
 }
 
-if(instance_number(obj_slime_base) == 0)
+/*if(instance_number(obj_slime_base) == 0)
 {
     instance_destroy()
-}
+}*/
 
 
 </string>

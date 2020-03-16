@@ -33,6 +33,34 @@ switch(argument0)
         inst.a_speed = 1 / 2
         break
     }
+    case 6:
+    {
+        window_set_fullscreen(!window_get_fullscreen())
+        break
+    }
+    case 7:
+    {
+        obj_settings.current_vsync = !obj_settings.current_vsync
+        display_reset(obj_settings.current_aa, obj_settings.current_vsync)
+        break
+    }
+    case 8:
+    {
+        if(obj_settings.current_aa == display_aa)
+        {
+            obj_settings.curent_aa = 0
+        }
+        else {
+            obj_settings.current_aa = display_aa
+        }
+        display_reset(obj_settings.current_aa, obj_settings.current_vsync)
+        break
+    }
+    case 9:
+    {
+        obj_settings.music = !obj_settings.music
+        break;
+    }
     default:
     {
         show_message("Event type not supported, call the developer to fix the issue :D")

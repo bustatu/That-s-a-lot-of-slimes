@@ -51,6 +51,11 @@ ord_right = ord('D')
 ord_attack = vk_space
 ord_escape = vk_escape
 
+//Display values
+current_aa = 0
+current_vsync =false
+music = true
+
 //Create cursor
 var crs = instance_create(room_width/2, room_height/2, obj_cursor);
 crs.image_xscale = 2
@@ -88,17 +93,15 @@ window_caption = window_get_caption()
 //Set window caption
 window_set_caption(window_caption + " fps: " + string(fps))
 
-//Set movement
-/*if(room == r_menu)
+//Set music
+if(!audio_is_playing(menusong) &amp;&amp; music)
 {
-    if(obj_cursor.actual_x &lt; view_xview[0] + view_wview[0] / 2)
-    {
-        view_xview[0] -= adelta_time * 5
-    }
-    else {
-        view_xview[0] += adelta_time * 5
-    }
-}*/
+    audio_play_sound(menusong, 1, true)
+}
+else if(audio_is_playing(menusong) &amp;&amp; !music)
+{
+    audio_stop_sound(menusong)
+}
 </string>
           </argument>
         </arguments>
